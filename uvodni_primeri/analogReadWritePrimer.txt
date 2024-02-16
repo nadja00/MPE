@@ -1,0 +1,12 @@
+
+byte ledPin = 13; //led je povezana na digitalni pin 9
+byte analogPin = 3; //potenciometar na  analogni pin 3 povezan
+int val = 0 ;
+
+void setup(){}
+
+void loop(){
+	val = analogRead(analogPin); // citanje ulaznog pina
+  	analogWrite(ledPin, val/4); // analogRead vraca vrednost 0-1023
+  	//analogWrite uzima vrednost 0-255 kao faktora ispune
+}

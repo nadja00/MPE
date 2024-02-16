@@ -1,0 +1,24 @@
+char incomingBytes[64];
+int duzina = 0;
+
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+	
+  	while(!Serial.available());
+  	
+    delay(100); //sacekaj da se ocita sve unete karaktere
+    duzina = Serial.available();
+    Serial.print("Uneto je ");
+    Serial.print(duzina);
+    Serial.println(" karaktera");
+  
+  	Serial.readBytes(incomingBytes,duzina);
+  	incomingBytes[duzina] = 0;
+  	
+  	Serial.print("Unet je string ");
+  	Serial.println(incomingBytes);
+  
+}

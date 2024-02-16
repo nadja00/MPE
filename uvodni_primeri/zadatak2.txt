@@ -1,0 +1,21 @@
+char string[128];
+int duzina = 0;
+
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+	while(Serial.available() == 0);
+  	delay(100);
+  
+  	duzina = Serial.available();
+  	Serial.readBytes(string, duzina);
+  	string[duzina] = 0;
+  	
+  	Serial.print("Korisnik je uneo string: ");
+  	Serial.print(string);
+  	Serial.print(" duzine ");
+  	Serial.print(duzina);
+  	Serial.println(" karaktera");
+}

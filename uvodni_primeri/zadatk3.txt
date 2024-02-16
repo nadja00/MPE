@@ -1,0 +1,21 @@
+char string[128];
+int duzina = 0;
+
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+	serialEvent();
+}
+
+void serialEvent(){
+
+  if(Serial.available()){
+  	delay(100);
+  	duzina = Serial.available();
+    Serial.readBytes(string,duzina);
+    string[duzina] = 0;
+    Serial.println(string);
+  }
+}

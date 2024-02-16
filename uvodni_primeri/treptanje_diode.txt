@@ -1,0 +1,15 @@
+#define LED_L 13
+
+void setup(){
+	//inicijaliyacija pina 13 -> potrebno je da bude izlazni
+  	pinMode(LED_L, OUTPUT);
+}
+
+//BESKONACNA PETLJA kao while(1) u klasicnom main-u
+void loop(){
+	
+  digitalWrite(LED_L, HIGH);
+  delay(1000);
+  digitalWrite(LED_L, LOW);
+  delay(1000);
+}
