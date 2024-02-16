@@ -1,0 +1,51 @@
+char unos[64];
+int duzina = 0;
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+	Serial.println("Unesite broj poena: ");
+  	while(Serial.available() == 0);
+  	delay(100);
+  	duzina = Serial.available();
+  	Serial.readBytes(unos, duzina);
+  	unos[duzina] = 0;
+  
+  	int poeni = atoi(unos);
+  	int ocena;
+  	
+  	switch(poeni){
+    
+    	case 0 ... 50:
+          ocena = 5;
+      	  break;
+      	case 51 ... 60:
+          ocena = 6;
+      	  break;
+      	case 61 ... 70:
+           ocena = 7;
+      	   break;
+        case 71 ... 80:
+           ocena = 8;
+      	   break;
+        case 81 ... 90:
+           ocena = 9;
+      	   break;
+      	case 91 ... 100:
+           ocena = 10;
+      	   break;
+      default:
+          break;
+    }
+  
+  if(poeni >= 0 && poeni <= 100){
+    Serial.print("Uneli ste ");
+  	Serial.print(poeni);
+  	Serial.print(" poena. => Ocena je: ");
+  	Serial.println(ocena);
+  }
+  else
+    Serial.println("Uneli ste poene koji nisu u opsegu 0-100. Unesite broj poena: ");
+  
+}

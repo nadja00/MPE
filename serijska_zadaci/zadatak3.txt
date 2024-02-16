@@ -1,0 +1,142 @@
+char unos[64];
+int duzina = 0;
+int ukupniPoeni = 0;
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+	Serial.println("Unesite broj poena iz teorije 1. deo: ");
+  	while(Serial.available() == 0);
+  	delay(100);
+  
+  	duzina = Serial.available();
+  	Serial.readBytes(unos, duzina);
+  	unos[duzina] = 0;
+  	int T1 = atoi(unos);
+	Serial.print("Uneli ste poena za T1: ");
+	Serial.println(T1);
+  	Serial.flush();
+    if(T1 > 25 || T1 < 0){
+      	Serial.println("Pogresno unet broj poena, pocnite sa unosom od pocetka");
+  	 }
+ 	 else{
+       	ukupniPoeni += T1;
+  		Serial.println("Unesite broj poena iz teorije 2. deo: ");
+  		while(Serial.available() == 0);
+  		delay(100);
+  
+  		duzina = Serial.available();
+  		Serial.readBytes(unos, duzina);
+  		unos[duzina] = 0;
+       	int T2 = atoi(unos);
+       	Serial.flush();
+		Serial.print("Uneli ste poena za T2: ");
+		Serial.println(T2);
+       if(T2 > 25 || T2 < 0){
+      		Serial.println("Pogresno unet broj poena, pocnite sa unosom od pocetka");
+       }
+       else{
+         	ukupniPoeni += T2;
+         	Serial.println("Unesite broj poena iz zadataka 1. deo: ");
+  			while(Serial.available() == 0);
+  			delay(100);
+  
+  			duzina = Serial.available();
+  			Serial.readBytes(unos, duzina);
+  			unos[duzina] = 0;
+       		int V1 = atoi(unos);
+       		Serial.flush();
+			Serial.print("Uneli ste poena za V1: ");
+			Serial.println(V1);
+            if(V1 > 20 || V1 < 0){
+      			Serial.println("Pogresno unet broj poena, pocnite sa unosom od pocetka");
+ 	 			//break;
+            }
+       		else{
+             	ukupniPoeni += V1;
+              	Serial.println("Unesite broj poena iz zadataka 2. deo: ");
+  				while(Serial.available() == 0);
+  				delay(100);
+  
+  				duzina = Serial.available();
+  				Serial.readBytes(unos, duzina);
+  				unos[duzina] = 0;
+       			int V2 = atoi(unos);
+       			Serial.flush();
+				Serial.print("Uneli ste poena za V2: ");
+				Serial.println(V2);
+              	if(V2 > 20 || V2 < 0){
+      				Serial.println("Pogresno unet broj poena, pocnite sa unosom od pocetka");
+ 	 				
+                }
+       			else{
+             		ukupniPoeni += V2;
+              		Serial.println("Unesite broj poena iz zadataka 3. deo: ");
+  					while(Serial.available() == 0);
+  					delay(100);
+  
+  					duzina = Serial.available();
+  					Serial.readBytes(unos, duzina);
+  					unos[duzina] = 0;
+       				int V3 = atoi(unos);
+       				Serial.flush();
+					Serial.print("Uneli ste poena za V3: ");
+					Serial.println(V3);
+                  	if(V3 > 20 || V3 < 0){
+      					Serial.println("Pogresno unet broj poena, pocnite sa unosom od pocetka");
+ 	 					
+                    }
+       				else{
+             			ukupniPoeni += V3;
+                      	Serial.print("Uneli ste ukupno poena: ");
+						Serial.println(ukupniPoeni);
+                      	izracunajOcenu(ukupniPoeni);
+                      	ukupniPoeni = 0; // moras da restartujes da posle ne bi zbir bio preko 100
+                    }
+                  	
+                }
+            }  
+       }
+  	}
+    
+}
+
+void izracunajOcenu(int poeni){
+	int ocena;
+  	
+  	switch(poeni){
+    
+    	case 0 ... 50:
+          ocena = 5;
+      	  break;
+      	case 51 ... 60:
+          ocena = 6;
+      	  break;
+      	case 61 ... 70:
+           ocena = 7;
+      	   break;
+        case 71 ... 80:
+           ocena = 8;
+      	   break;
+        case 81 ... 90:
+           ocena = 9;
+      	   break;
+      	case 91 ... 110:
+           ocena = 10;
+      	   break;
+      default:
+          break;
+    }
+  
+  if(poeni >= 0 && poeni <= 110){
+    Serial.print("Uneli ste ukupno ");
+  	Serial.print(poeni);
+  	Serial.print(" poena. => Ocena je: ");
+  	Serial.println(ocena);
+  }
+  else
+    Serial.println("Uneli ste poene koji nisu u opsegu 0-100. Unesite broj poena: ");
+  
+
+}
