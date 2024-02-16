@@ -1,0 +1,43 @@
+#define LED_L 13
+char broj[128];
+int duzina;
+bool flag = 1;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(LED_L, OUTPUT);
+}
+
+void loop() {
+  Serial.println("Unesite zeljeni broj treptaja: ");
+  
+  // Čekanje na unos sa serijskog porta
+  while (!Serial.available()) {
+    // Dodato provjeravanje flag-a
+    if (flag == 0) {
+      return;
+    }
+  }
+  
+  delay(100);
+  duzina = Serial.available();
+  Serial.readBytes(broj, duzina);
+  broj[duzina] = '\0';  // Postavljanje kraja stringa
+  Serial.print("zeljeni broj treptaja je: ");
+  Serial.println(broj);
+  flag = 0;
+  
+  // Pretvaranje stringa u integer
+  int zeljeniBroj = atoi(broj);
+  
+  for (int i = 0; i < zeljeniBroj; i++) {
+    ledBlink();
+  }
+}
+
+void ledBlink() {
+  digitalWrite(LED_L, HIGH);
+  delay(1000);
+  digitalWrite(LED_L, LOW);
+  delay(1000);
+}
