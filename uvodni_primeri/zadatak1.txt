@@ -1,0 +1,15 @@
+char karakter;
+
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+	while(Serial.available() == 0);
+  
+  	karakter = Serial.read();
+  
+  	Serial.print("Uneli ste ");
+  	Serial.println(karakter);
+  	
+}

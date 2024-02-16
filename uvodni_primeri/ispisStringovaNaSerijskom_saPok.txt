@@ -1,0 +1,22 @@
+char* myString[] = {
+	"Ovo je string 1",
+  	"Ovo je string 2",
+  	"Ovo je string 3",
+  	"Ovo je string 4",
+  	"Ovo je string 5",
+  	"Ovo je string 6"
+};
+
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+  
+  for(int i = 0 ; i < 6 ; i++ ){
+  	
+    Serial.println(myString[i]);
+    delay(1000);
+  }
+  
+}
