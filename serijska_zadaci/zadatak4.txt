@@ -1,0 +1,27 @@
+char unos[64];
+int duzina;
+void setup(){
+	Serial.begin(9600);
+}
+
+void loop(){
+  	Serial.println("Unesite zeljeni string: ");
+	while(Serial.available() == 0);
+  	delay(100);
+  	duzina = Serial.available();
+  	Serial.readBytes(unos,duzina);
+  	unos[duzina] = 0;
+  	int pomoc = 0;
+  	for(int i = 0; i < (duzina/2); i++){
+      if(unos[0 + i] == unos[duzina - 1 -i])
+       		 pomoc++;
+ 	}
+  	
+  	Serial.print("Uneli ste string: ");
+    Serial.print(unos);
+  	if(pomoc == duzina/2 ){
+      	Serial.println(" i on je palindrom");
+  	}
+  	else
+      Serial.println(" i on nije palindrom");
+}

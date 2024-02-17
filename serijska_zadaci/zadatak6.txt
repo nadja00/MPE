@@ -1,0 +1,39 @@
+char unosN[64];
+char unosQ[64];
+bool flag = 1;
+int N = 0, q = 0;
+int duzina1 = 0, duzina2 = 0;
+void setup(){
+	Serial.begin(9600);
+  	
+}
+
+void loop(){
+  if(flag == 1){
+	Serial.println("Unesite broj N: ");
+  	while(Serial.available() == 0);
+  	delay(100);
+  	duzina1 = Serial.available();
+  	Serial.readBytes(unosN,duzina1);
+  	unosN[duzina1] = 0;
+    N = atoi(unosN);
+    flag = 0;
+  }
+  else{
+  	Serial.println("Unesite broj q: ");
+  	while(Serial.available() == 0);
+  	delay(100);
+  	duzina2 = Serial.available();
+  	Serial.readBytes(unosQ,duzina2);
+  	unosQ[duzina2] = 0;
+    q = atoi(unosQ);
+  	
+  	for(int i = 2; i <= N; i++){
+  		if(i%q == 0)
+          Serial.println(i);
+    }
+    
+    flag = 1;
+  }
+  	
+}
