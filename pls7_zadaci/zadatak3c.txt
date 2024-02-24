@@ -1,0 +1,35 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void){
+	
+    DDRD = 0xff;
+  	DDRB = 1 << 4;
+  	unsigned char brojac1 = 5, brojac2 = 7, maska = 0x3f;
+  
+  	PORTD = maska;
+  	_delay_ms(1000);
+  		
+  
+  	while(1){
+      maska &= ~(1 << brojac1);
+      brojac1 --;
+      PORTD = maska;
+      _delay_ms(1000);
+      
+      maska |= (1 << brojac2);
+      brojac2 --;
+      PORTD = maska;
+      _delay_ms(1000);
+      
+      if(maska == 0xfc){
+      	brojac1 = 5;
+        brojac2 = 7;
+        maska = 0x3f;
+        PORTD = maska;
+  		_delay_ms(1000);
+      }
+  	}
+  	
+	return 0;
+}

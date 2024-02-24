@@ -1,0 +1,34 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+
+int main(void)
+{
+  	unsigned char pomoc;
+  	DDRD = 0xff;
+  	DDRB = 1 << 4;
+  	PORTB = ~(1 << 4);
+  
+  	pomoc = PORTD;
+  	pomoc |= 0xfe;
+  	PORTD = pomoc;
+  	_delay_ms(1000);
+  	
+  	for(int i = 1; i < 8; i++){
+      	pomoc <<= 1;
+      	pomoc |= 0x01;
+      	PORTD = pomoc;
+      	_delay_ms(1000);
+      	
+      if(i == 7){
+        i = 1;
+      	pomoc = 0x00;
+        pomoc |= 0xfe;
+  		PORTD = pomoc;
+  		_delay_ms(1000);
+      }
+      	
+  	}
+  	
+  	return 0;
+}

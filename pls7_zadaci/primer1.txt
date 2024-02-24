@@ -1,0 +1,22 @@
+//implementirati treptanje dioda koje trepcu na svakih 1s (svaka druga)
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+  	int maska;\
+    maska = 0x01 << 4;
+	DDRD = 0xff; //svi pinovi porta D su izlazni
+  	DDRB |= maska; //4. pin porta B je izlazni
+  	PORTB &= ~maska; //PB4 = 0 => Q0 provodi => LEDS na visokom nivou
+  	PORTD = 0xaa; //svetli 0,2,4,6 dioda
+  	
+  	while(1)
+    {
+      	_delay_ms(1000);
+      	PORTD = ~PORTD;
+      	_delay_ms(1000);
+    }
+  
+  	return 0;
+}

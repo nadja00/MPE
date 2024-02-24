@@ -1,0 +1,46 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void){
+
+	DDRD = 0xff;
+  	DDRB = 1 << 4;
+  	unsigned char maska = 0x0f;
+  	PORTD = maska;
+  	_delay_ms(1000);
+  	bool levo, desno;
+  	desno = 1;
+  	levo = 0;
+
+  	while(1){
+      for(unsigned char i = 0; i < 4; i++){
+        if(desno == 1){
+      		maska >>= 1;
+        	maska |= (1 << 7);
+        	PORTD = maska;
+        	_delay_ms(1000);
+          	if(i == 3){
+            	desno = 0;
+              	levo = 1;
+              	maska = 0xf0;
+            }
+        }
+        else{
+        	maska <<= 1;
+          	maska |= 0x01;
+          	PORTD = maska;
+          	_delay_ms(1000);
+          	if(i == 3){
+            	desno = 1;
+              	levo = 0;
+              	maska = 0x0f;
+            }
+        
+        }
+        
+      }
+      	
+    }
+   
+	return 0;
+}
