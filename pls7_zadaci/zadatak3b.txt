@@ -1,0 +1,56 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void){
+
+  DDRD = 0xff;
+  DDRB = 1 << 4;
+  bool napred = 1, nazad = 0;
+  unsigned char maska1, maska2, pomoc; //maska1 leva polovina, maska2 desna
+  maska1 = 0x7f;
+  maska2 = 0xfe;
+  PORTD = maska1 & maska2;
+  _delay_ms(1000);
+ 
+  while(1){
+    for(unsigned char i = 0; i < 3; i++){
+      if(napred == 1){
+    	maska1 >>= 1;
+      	maska2 <<= 1;
+      	pomoc = maska1 & maska2;
+      	PORTD = pomoc;
+      	_delay_ms(1000);
+        if(i == 2){
+        	maska1 = 0x10;
+          	maska2 = 0x08;
+ 			pomoc = maska1 | maska2;
+          	PORTD = pomoc;
+          	_delay_ms(1000);
+          	napred = 0;
+          	nazad = 1;
+        }
+      }
+      else
+      {
+   		 maska1 <<= 1;
+         maska2 >>= 1;
+         maska1 |= 0x10;
+         maska2 |= 0x08;
+         pomoc = maska1 | maska2;
+         PORTD = pomoc;
+         _delay_ms(1000);
+         if(i == 2){
+        	maska1 = 0x7f;
+ 			maska2 = 0xfe;
+  			PORTD = maska1 & maska2;
+  			_delay_ms(1000);
+          	napred = 1;
+          	nazad = 0;
+        }
+        
+      }
+    }
+  }
+  return 0;
+}
+

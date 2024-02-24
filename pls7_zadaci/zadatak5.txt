@@ -1,0 +1,84 @@
+//mozes modifikovati samo da dodas funkciju za ispis na displej a da u njoj prosledjujes elemente koji su vrednost i displej
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+unsigned char simboli[10] = {
+0x05, 0xdd, 0x46, 0x54, 0x9c, 0x34, 0x24, 0x5d, 0x04, 0x14};
+
+
+int main(void){
+
+  	DDRD = 0xff;
+  	DDRB = 0x0f;
+  	DDRC = 0x00;
+  	
+  	unsigned char taster_novo = 0x00, taster_staro = 0x00;
+  	unsigned char displej = 3, vrednost = 0;
+  	
+  	PORTB = ~(0x01 << displej);
+  	PORTD = simboli[vrednost];
+  	_delay_ms(1000);
+  
+  	while(1){
+    	taster_novo = PINC & 0x0f;
+      
+      	if(taster_staro != taster_novo){
+        	
+          if(!(taster_novo & 0x01)){ //S0 levi taster
+            if(displej != 3){
+            	displej ++;
+              	PORTB = ~(0x01 << displej);
+  				PORTD = simboli[vrednost];
+  				_delay_ms(100);
+            }
+            else{
+            	displej = 0;
+              	PORTB = ~(0x01 << displej);
+  				PORTD = simboli[vrednost];
+  				_delay_ms(100);
+            }  
+          } 
+          
+          if(!(taster_novo & 0x04)){ //S3 desni taster
+            if(displej != 0){
+            	displej --;
+              	PORTB = ~(0x01 << displej);
+  				PORTD = simboli[vrednost];
+  				_delay_ms(100);
+            }
+            else{
+            	displej = 3;
+              	PORTB = ~(0x01 << displej);
+  				PORTD = simboli[vrednost];
+  				_delay_ms(100);
+            }  
+          }
+          
+          if(!(taster_novo & 0x08)){ //S4 gornji taster
+            if(vrednost != 9){
+            	vrednost ++;
+              	PORTB = ~(0x01 << displej);
+  				PORTD = simboli[vrednost];
+  				_delay_ms(100);
+            }  
+          }
+          
+          if(!(taster_novo & 0x02)){ //S2 donji taster
+            if(vrednost != 0){
+            	vrednost --;
+              	PORTB = ~(0x01 << displej);
+  				PORTD = simboli[vrednost];
+  				_delay_ms(100);
+            }  
+          }
+        
+          
+        
+          	taster_staro = taster_novo;
+        }
+          
+    }
+  	
+	return 0;
+}

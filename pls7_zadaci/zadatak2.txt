@@ -1,0 +1,33 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+unsigned char simboli[10] = {
+ 0x05, 0xdd, 0x46, 0x54, 0x9c, 0x34, 0x24, 0x5d, 0x04, 0x14
+}; //cifre 0,1,2,3,4,5,6,7,8,9
+int main(void){
+	
+  	DDRD = 0xff; // 1111 1111
+  	DDRB = 0x0f; // 0000 1111
+  
+  	srand(45);
+  	
+  	unsigned char cifra, pozicija;
+  	
+	while(1)
+    {
+      	//randomizujemo poziciju 0-3
+      	//min + rand()%(max+1 - min)
+      	pozicija = 0 + rand()%(3+1 - 0);
+    	PORTB = ~(1 << pozicija);
+      	
+      	//randomizujemo cifru [0-9]
+      	//[min max]
+      	// min + rand()%(max+1 - min)
+      	cifra = 0 + rand()%(9+1 - 0);
+  		PORTD = simboli[cifra];
+        _delay_ms(1000);
+      	
+    }
+
+	return 0;
+}

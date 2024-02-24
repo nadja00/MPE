@@ -1,0 +1,25 @@
+#include <avr/io.h>
+#include <util/delay.h>
+
+const unsigned char simboli[] = {
+	0xDD, 0x46, 0x54, 0x9C
+}; // A, b, C , d
+
+int main(void)
+{
+  	unsigned char displej ;
+  	DDRB = 0x0f; // port B (PB3 - PB0) je postavljen za izlazni
+  	DDRD = 0xff; // port D postavljen na izlazni
+  
+  while(1){
+      for(displej = 1; displej <= 4; displej ++){
+      	PORTB = ~(0x01 << (4 - displej));
+        
+        PORTD = simboli[displej - 1];
+        _delay_ms(2);
+      }
+    }
+  
+  	
+  	return 0;
+}
